@@ -8,12 +8,15 @@ const CacheController = require('./controllers/CacheController');
 const app = express();
 
 //Connect to Database (initialize app only if the connection is established)
-const env = process.env.NODE_ENV || "PROD";
+const env = process.argv[2] || "PROD";
 mongoose.connect(MongoConfig[env].uri, (err) => {
-    if(err) throw err;
+    if(err) {
+        console.log(err);
+        throw err;
+    }
     //start the server
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT);
+    const PORT = process.argv[3] || 3000;
+    app.listen(PORT, () => console.log(`Server started on ${PORT}`));
 });
 
 //initialize cache routes
