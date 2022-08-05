@@ -22,8 +22,7 @@
 ### POST
 #### /cache/:id
   Add new  key value pair in the cache, with id as key and value any random string or the one provided in the payload <br />
-  or <br />
-  Update the value corresponding to the key passed as id in the route <br />
+  <b> or </b> Update the value corresponding to the key passed as id in the route <br />
   &emsp;URI => localhost:3000/cache/1 <br />
   &emsp;Payload => { <br />
   &emsp;&emsp;value: string, <br />
