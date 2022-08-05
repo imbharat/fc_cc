@@ -29,7 +29,7 @@
   &emsp;&emsp;value: string, <br />
   &emsp;&emsp;ttl: integer <br />
   &emsp;} <br />
-  &emsp;Response => "f6ty5k0hlf" => A random string, stored as a value against the id, in the cache <br />
+  &emsp;Response => "f6ty5k0hlf" => A random string, stored as a value against the id, in the cache <br /> <br />
   NOTE: Payload is optional, if value is sent then that would be stored in cache otherwise a random string. Also, if ttl is not passed then 300 seconds is default <br />
     
 ### DELETE
@@ -43,4 +43,4 @@
   &emsp;Response => "Cache cleared"
     
     
-### NOTES:
+## NOTES:
