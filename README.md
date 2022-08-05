@@ -12,8 +12,8 @@
 ### GET
 #### /cache/:id
   Get cache by id <br />
-    URI => localhost:3000/cache/1 <br />
-    Response => "f6ty5k0hlf" => A random string, stored as a value against the id, in the cache
+  &emsp;URI => localhost:3000/cache/1 <br />
+  &emsp;Response => "f6ty5k0hlf" => A random string, stored as a value against the id, in the cache
 #### /cache/keys
   Get all cache keys <br />
   &emsp;URI => localhost:3000/cache/keys <br />
@@ -25,10 +25,10 @@
   or <br />
   Update the value corresponding to the key passed as id in the route <br />
   &emsp;URI => localhost:3000/cache/1 <br />
-  &emsp;&emsp;Payload => { <br />
+  &emsp;Payload => { <br />
   &emsp;&emsp;value: string, <br />
   &emsp;&emsp;ttl: integer <br />
-  &emsp;&emsp;} <br />
+  &emsp;} <br />
   &emsp;Response => "f6ty5k0hlf" => A random string, stored as a value against the id, in the cache <br />
   NOTE: Payload is optional, if value is sent then that would be stored in cache otherwise a random string. Also, if ttl is not passed then 300 seconds is default <br />
     
