@@ -45,5 +45,5 @@
 ## NOTES:
 #### 1. By default application server runs on port 3000. This can be changed from npm scripts inside package.json file.
 #### 2. By default backend code implements a logic which makes cache valid only for 5 minutes. Custom time can be passed (in seconds) in the payload while adding or updating the cache.
-#### Server uses Mongoose connection pool, instead of opening and closing connection for every database query.
-#### Cache is invalidated at the code level, not at the database level. To do it on the database level, a ttl index can be created on modifiedDate column (not present right now), which will automatically delete the entry from the database.
+#### 3. Server uses Mongoose connection pool, instead of opening and closing connection for every database query.
+#### 4. Cache is invalidated at the code level, not at the database level. To do it on the database level, a ttl index can be created on modifiedDate column (not present right now), which will automatically delete the entry from the database.
