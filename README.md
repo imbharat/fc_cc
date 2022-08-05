@@ -13,9 +13,34 @@
 #### /cache/:id
   Get cache by id
     URI => localhost:3000/cache/1
-    Response => "f6ty5k0hlf" => A random string, stored as a value against the id in the cache
+    Response => "f6ty5k0hlf" => A random string, stored as a value against the id, in the cache
 #### /cache/keys
   Get all cache keys
     URI => localhost:3000/cache/keys
     Response => [1, 2, 3] => Array of all stored keys
     
+### POST
+#### /cache/:id
+  Add new  key value pair in the cache, with id as key and value any random string or the one provided in the payload 
+  or 
+  Update the value corresponding to the key passed as id in the route
+    URI => localhost:3000/cache/1
+    Payload => {
+      value: string,
+      ttl: integer
+    }
+    ##### Note: Payload is optional, if value is sent then that would be stored in cache otherwise a random string. Also, if ttl is not passed then 300 seconds is default
+    Response => "f6ty5k0hlf" => A random string, stored as a value against the id, in the cache
+    
+### DELETE
+#### /cache/:id
+  Delete cache by id
+    URI => localhost:3000/cache/1
+    Response => "Item removed from cache"
+#### /cache
+  Clear all cache
+    URI => localhost:3000/cache
+    Response => "Cache cleared"
+    
+    
+### NOTES:
