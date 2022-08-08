@@ -29,7 +29,7 @@ class CacheService {
     async getAllCacheKeys() {
         try {
             const result = await this.CacheDAL.getAllCacheKeys({});
-            return [...result.map(row => row.key)];
+            return [...result.filter(row => this.isValidCache(row)).map(cache => cache.key)];
         }
         catch (ex) {
             throw ex;
@@ -47,9 +47,7 @@ class CacheService {
         let cacheObj = cache;
         //if value is not passed from client in the payload
         if(!cacheObj.value){
-            cacheObj = {
-                value: (Math.random() + 1).toString(36).substring(2)
-            }
+            cacheObj.value = (Math.random() + 1).toString(36).substring(2);
         }
         cacheObj = this.addOrUpdateValidity(cacheObj);
         try {
@@ -69,7 +67,7 @@ class CacheService {
     async deleteCacheById(id) {
         try {
             await this.CacheDAL.deleteCache({
-                id: id
+                key: id
             });
             return "Item removed from cache";
         }
@@ -102,8 +100,8 @@ class CacheService {
                 validTill: 1
             }, 1);
             //delete oldest cache
-            if(oldestCache){
-                return await this.deleteCacheById(oldestCache.key);
+            if(oldestCache?.length){
+                return await this.deleteCacheById(oldestCache[0].key);
             }
         }
     }
