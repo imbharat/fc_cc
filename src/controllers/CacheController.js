@@ -1,79 +1,74 @@
-const express = require('express');
-const jsonParser = require("body-parser").json();
-
 const CacheService = require('../services/CacheService');
 
-//initialize router to expose routes
-const router = express.Router();
-
 class CacheController {
+    static #EXPLICIT = false;
+    static #INSTANCE = null;
+    
     constructor(){
+        if(!CacheController.#EXPLICIT){
+            throw new Error('The constructor is private, please use getInstance method');
+        }
         this.CacheService = new CacheService();
     }
-    initRoutes() {
-        
-        //GET all keys
-        router.get('/keys', async (req, res) => {
-            try {
-                const response = await this.CacheService.getAllCacheKeys();
-                res.status(200).json(response);
-            }
-            catch(ex) {
-                res.status(500).json('Something Went Wrong!');
-            }
-        });
 
-        //GET by ID
-        router.get('/:id', async (req, res) => {
-            let { id } = req.params;
-            id = parseInt(id);
-            try {
-                const response = await this.CacheService.getCacheById(id);
-                res.status(200).json(response);
-            }
-            catch(ex) {
-                res.status(500).json('Something Went Wrong!')
-            }
-        });
+    static getInstance() {
+        CacheController.#EXPLICIT = true;
+        if(!CacheController.#INSTANCE){
+            CacheController.#INSTANCE = new CacheController();
+        }
+        CacheController.#EXPLICIT = false;
+        return CacheController.#INSTANCE;
+    }
 
-        //POST (insert or update)
-        router.post('/:id', jsonParser, async (req, res) => {
-            let { id } = req.params;
-            id = parseInt(id);
-            try {
-                const response = await this.CacheService.upsertCacheById(id, req.body);
-                res.status(200).json(response);
-            }
-            catch(ex) {
-                res.status(500).json('Something Went Wrong!');
-            }
-        });
+    async getAllCacheKeys(req, res, next) {
+        try {
+            return await this.CacheService.getAllCacheKeys();
+        }
+        catch(ex) {
+            throw ex;
+        }
+    }
 
-        //DELETE by ID
-        router.delete('/:id', async (req, res) => {
-            let { id } = req.params;
-            id = parseInt(id);
-            try {
-                const response = await this.CacheService.deleteCacheById(id);
-                res.status(200).json(response);
-            }
-            catch(ex) {
-                res.status(500).json('Something Went Wrong!');
-            }
-        });
+    async getCacheById(req, res, next) {
+        let { id } = req.params;
+        id = parseInt(id);
+        try {
+            return await this.CacheService.getCacheById(id);
+        }
+        catch(ex) {
+            throw ex;
+        }
+    }
 
-        //DELETE all
-        router.delete('/', async (req, res) => {
-            try {
-                const response = await this.CacheService.deleteAllCacheData();
-                res.status(200).json(response);
-            }
-            catch(ex) {
-                res.status(500).json('Something Went Wrong!');
-            }
-        });
-        
-        return router;
+    async upsertCacheById(req, res, next) {
+        let { id } = req.params;
+        id = parseInt(id);
+        try {
+            return await this.CacheService.upsertCacheById(id, req.body);
+        }
+        catch(ex) {
+            throw ex;
+        }
+    }
+
+    async deleteCacheById(req, res, next) {
+        let { id } = req.params;
+        id = parseInt(id);
+        try {
+            return await this.CacheService.deleteCacheById(id);
+        }
+        catch(ex) {
+            throw ex;
+        }
+    }
+
+    async deleteAllCacheData(req, res, next) {
+        try {
+            return await this.CacheService.deleteAllCacheData();
+        }
+        catch(ex) {
+            throw ex;
+        }
     }
 }
 
